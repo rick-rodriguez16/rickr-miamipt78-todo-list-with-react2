@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TodoHeader from "./TodoHeader";
 import TodoBody from "./TodoBody";
 import TodoFooter from "./TodoFooter";
@@ -17,8 +17,17 @@ const Todo = () => {
                     setTodos={setTodos}
                 />
             </div>
-            {/* <TodoBody />
-            <TodoFooter /> */}
+            <div>
+                <TodoBody 
+                    todos={todos}
+                    setTodos={setTodos}
+                />
+            </div>
+            <div>
+                <TodoFooter 
+                    todos={todos}
+                />
+            </div>
         </>
     );
 }

@@ -18,14 +18,14 @@ const TodoHeader = ({ todos, setTodos }) => {
         }
         else {
             // there is a string in the text box and we are ready to move to step 2
-            console.log("newTodo text validated!");
+            //console.log("newTodo text validated!");
             addTask();
         }
     }
 
     const addTask = () => {
         // this function will handle steps 2 and 3
-        console.log("Creating new todo: ", newTodo);
+        //console.log("Creating new todo: ", newTodo);
 
         // step 2 - creating the todo object
         const newTodoObj = {
@@ -46,7 +46,7 @@ const TodoHeader = ({ todos, setTodos }) => {
         setCounter(counter + 1);
         setNewTodo("");
 
-        console.log("Current list of todos: ", appendedArray);
+        //console.log("Current list of todos: ", appendedArray);
     }
 
     return (
