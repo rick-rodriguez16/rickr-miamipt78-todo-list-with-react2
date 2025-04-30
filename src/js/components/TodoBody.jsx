@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const TodoBody = ({ todos, setTodos}) => {
-    // we need two functions:
+    // create a useEffect to fetch data from the TODO API
+    // First display it on the console
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+    // a function to GET a user's todos
+    function fetchData() {
+        fetch(`https://playground.4geeks.com/todo/users/RickRod`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.status);
+                }
+                return response.json();
+            })
+            .then(data => console.log(data))
+            .catch(error => {
+                console.error('Looks like there is a problem: ', error)
+            })
+    }    
 
     // a function to render the todos array
     const renderTodos = todos.map(todoItem => {
