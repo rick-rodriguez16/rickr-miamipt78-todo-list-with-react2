@@ -17,7 +17,10 @@ const TodoBody = ({ todos, setTodos}) => {
                 }
                 return response.json();
             })
-            .then(data => console.log(data))
+            .then(data => {
+                console.log(data.todos);
+                setTodos(data.todos);
+            })
             .catch(error => {
                 console.error('Looks like there is a problem: ', error)
             })
@@ -27,7 +30,7 @@ const TodoBody = ({ todos, setTodos}) => {
     const renderTodos = todos.map(todoItem => {
         return (
             <li className="todo-item" key={todoItem.id}>
-                <h4>{todoItem.todo}
+                <h4>{todoItem.label}
                     <span>
                         <button
                             className="delete-task"
