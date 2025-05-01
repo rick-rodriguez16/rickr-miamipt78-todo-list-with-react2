@@ -43,13 +43,31 @@ const TodoBody = ({ todos, setTodos}) => {
     })
 
     // a function to delete a selected todo element
-    const deleteTodo = (id) => {
+    const deleteTodo = async (id) => {
         // 1. declare a variable called updatedTodos
         // 2. assign it with the FILTERED todos array by removing the todo with the passed id argument
         // todos.filter()
         // 3. SetTodos with the updatedTodos
+        // 4. create the fetch needed to delete the todo item from the TODO API
         const updatedTodos = todos.filter((todoItem) => todoItem.id != id)
         setTodos(updatedTodos);
+
+        //using async await
+        const response = await fetch(`https://playground.4geeks.com/todo/todos/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            console.log('Deletion successful!');
+        } else {
+            console.log('Error: ', response.status, response.statusText);
+            return {
+                error: {
+                    status: response.status,
+                    statusText: response.statusText
+                }
+            }
+        }
     }
 
 

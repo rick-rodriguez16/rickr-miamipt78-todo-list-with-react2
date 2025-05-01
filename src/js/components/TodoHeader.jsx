@@ -4,7 +4,25 @@ import React, { useState } from "react";
 const TodoHeader = ({ todos, setTodos }) => {
     // create 2 useStates that will capture the user input (string) and apply a counter to the todo object
     const [newTodo, setNewTodo] = useState("");
-    const [counter, setCounter] = useState(0);
+
+    
+    // a function to GET a user's todos
+    function fetchData() {
+        fetch(`https://playground.4geeks.com/todo/users/RickRod`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.todos);
+                setTodos(data.todos);
+            })
+            .catch(error => {
+                console.error('Looks like there is a problem: ', error)
+            })
+    } 
 
     // Remember, we will need to do the following
     // 1. Validate the input
@@ -29,13 +47,12 @@ const TodoHeader = ({ todos, setTodos }) => {
 
         // step 2 - creating the todo object
         const newTodoObj = {
-            id: counter,
-            todo: newTodo
+            label: newTodo
         }
 
         // step 3 - append the todo object to the todo array
-        const appendedArray = [...todos, newTodoObj];
-        setTodos(appendedArray);
+        // const appendedArray = [...todos, newTodoObj];
+        // setTodos(appendedArray);
 
         // this is another way to append
         // setTodos([...todos, {
@@ -43,10 +60,35 @@ const TodoHeader = ({ todos, setTodos }) => {
         //     todo: newTodo
         // }])
 
-        setCounter(counter + 1);
         setNewTodo("");
 
-        //console.log("Current list of todos: ", appendedArray);
+        // step 4. create a new function to fetch a POST
+        postNewTask(newTodoObj);
+    }
+
+    const postNewTask = async (todoObject) => {
+                                // fetch needs 2 arguments for a POST (URL, {options})
+        const response = await fetch("https://playground.4geeks.com/todo/todos/RickRod", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(todoObject)
+        });
+        
+        if (response.ok) {
+            console.log("Todo successfully added!");
+        }
+        else {
+            console.log('Error: ', response.status, response.statusText);
+            return {
+                error: {
+                    status: response.status,
+                    statusText: response.statusText
+                }
+            }
+        }
+        fetchData();
     }
 
     return (
